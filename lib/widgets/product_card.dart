@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ProductCard extends StatelessWidget {
+  const ProductCard({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -144,10 +146,10 @@ class _BackgroundImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(25),
-      child: Container(
+      child: const SizedBox(
         width: double.infinity,
         height: 400,
-        child: const FadeInImage(
+        child: FadeInImage(
           placeholder: AssetImage('assets/loading.gif'),
           image: NetworkImage('https://picsum.photos/id/6/400/300'),
           fit: BoxFit.cover,
