@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 class ProductsService extends ChangeNotifier {
   final String _baseUrl = 'flutter-varios-42f6f-default-rtdb.firebaseio.com';
   final List<Product> products = [];
+  late Product selectedProduct;
 
   bool isLoading = true;
 

@@ -11,7 +11,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productsService = Provider.of<ProductsService>(context);
-    if (productsService.isLoading) return LoadingScreen();
+    if (productsService.isLoading) return const LoadingScreen();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Productos'),
@@ -19,7 +19,11 @@ class HomeScreen extends StatelessWidget {
       body: ListView.builder(
         itemCount: productsService.products.length,
         itemBuilder: (_, index) => GestureDetector(
-          onTap: () => Navigator.pushNamed(context, 'product'),
+          onTap: () {
+            productsService.selectedProduct =
+                productsService.products[index].copy();
+            Navigator.pushNamed(context, 'product');
+          },
           child: ProductCard(product: productsService.products[index]),
         ),
       ),

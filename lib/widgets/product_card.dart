@@ -18,7 +18,7 @@ class ProductCard extends StatelessWidget {
         child: Stack(
           alignment: Alignment.bottomLeft,
           children: [
-            _BackgroundImage(url: product.picture!),
+            _BackgroundImage(url: product.picture),
             _ProductDetails(product: product),
             Positioned(
               top: 0,
@@ -53,7 +53,7 @@ class ProductCard extends StatelessWidget {
 class _NotAvailable extends StatelessWidget {
   final Product product;
 
-  const _NotAvailable({super.key, required this.product});
+  const _NotAvailable({required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +82,7 @@ class _NotAvailable extends StatelessWidget {
 class _PriceTag extends StatelessWidget {
   final Product product;
 
-  const _PriceTag({super.key, required this.product});
+  const _PriceTag({required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +113,7 @@ class _PriceTag extends StatelessWidget {
 class _ProductDetails extends StatelessWidget {
   final Product product;
 
-  const _ProductDetails({super.key, required this.product});
+  const _ProductDetails({required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -157,9 +157,9 @@ class _ProductDetails extends StatelessWidget {
 }
 
 class _BackgroundImage extends StatelessWidget {
-  final String url;
+  final String? url;
 
-  const _BackgroundImage({super.key, required this.url});
+  const _BackgroundImage({required this.url});
 
   @override
   Widget build(BuildContext context) {
@@ -168,12 +168,17 @@ class _BackgroundImage extends StatelessWidget {
       child: SizedBox(
         width: double.infinity,
         height: 400,
-        child: FadeInImage(
-          //TODO: fix picture cuando no hay imagen
-          placeholder: const AssetImage('assets/loading.gif'),
-          image: NetworkImage(url),
-          fit: BoxFit.cover,
-        ),
+        child: url == null
+            ? const Image(
+                image: AssetImage('assets/no-image.jpg'),
+                fit: BoxFit.cover,
+              )
+            : FadeInImage(
+                //TODO: fix picture cuando no hay imagen
+                placeholder: const AssetImage('assets/loading.gif'),
+                image: NetworkImage(url!),
+                fit: BoxFit.cover,
+              ),
       ),
     );
   }
