@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:productos_app/providers/product_form_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -33,6 +34,7 @@ class _ProductScreenBody extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
+          // keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           child: Column(
             children: [
               Stack(
@@ -47,7 +49,7 @@ class _ProductScreenBody extends StatelessWidget {
                         Icons.arrow_back_ios_new,
                         size: 60,
                       ),
-                      color: Colors.red,
+                      color: Colors.white,
                       onPressed: () => Navigator.of(context).pop(),
                     ),
                   ),
@@ -60,7 +62,7 @@ class _ProductScreenBody extends StatelessWidget {
                         Icons.camera_alt_outlined,
                         size: 60,
                       ),
-                      color: Colors.red,
+                      color: Colors.white,
                       //TODO: camara o galleria
                       onPressed: () {},
                     ),
@@ -114,6 +116,10 @@ class _ProductForm extends StatelessWidget {
               const SizedBox(height: 30),
               TextFormField(
                 initialValue: '${product.price}',
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(
+                      RegExp(r'^(\d+)?\.?\d{0,2}'))
+                ],
                 onChanged: (value) {
                   if (double.tryParse(value) == null) {
                     product.price = 0;
@@ -131,9 +137,7 @@ class _ProductForm extends StatelessWidget {
               SwitchListTile(
                 value: product.available,
                 title: const Text('Disponible'),
-                onChanged: (value) {
-                  //TODO: pendiente
-                },
+                onChanged: (value) => productForm.updateAvailability(value),
               ),
               const SizedBox(height: 30),
             ],
