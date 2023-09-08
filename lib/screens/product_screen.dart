@@ -31,6 +31,7 @@ class _ProductScreenBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final productForm = Provider.of<ProductFormProvider>(context);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -78,7 +79,10 @@ class _ProductScreenBody extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.save_outlined),
-        onPressed: () {},
+        onPressed: () async {
+          if (!productForm.isValidForm()) return;
+          await productService.saveOrCreateProduct(productForm.product);
+        },
       ),
     );
   }
@@ -97,6 +101,8 @@ class _ProductForm extends StatelessWidget {
         width: double.infinity,
         decoration: _buildBoxDecoration(),
         child: Form(
+          key: productForm.formKey,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           child: Column(
             children: [
               const SizedBox(height: 20),
@@ -104,7 +110,7 @@ class _ProductForm extends StatelessWidget {
                 initialValue: product.name,
                 onChanged: (value) => product.name = value,
                 validator: (value) {
-                  if (value == null || value.length < 1) {
+                  if (value == null || value.isEmpty) {
                     return 'El nombre es obligatorio';
                   }
                 },

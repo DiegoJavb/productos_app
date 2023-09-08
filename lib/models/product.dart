@@ -17,8 +17,6 @@ class Product {
 
   factory Product.fromRawJson(String str) => Product.fromJson(json.decode(str));
 
-  String toRawJson() => json.encode(toJson());
-
   factory Product.fromJson(Map<String, dynamic> json) => Product(
         available: json["available"],
         name: json["name"],
@@ -32,6 +30,8 @@ class Product {
         "picture": picture,
         "price": price,
       };
+
+  String toRawJson() => json.encode(toJson());
 
   Product copy() => Product(
         available: this.available,
