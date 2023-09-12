@@ -174,7 +174,7 @@ class _BackgroundImage extends StatelessWidget {
                 fit: BoxFit.cover,
               )
             : FadeInImage(
-                //TODO: fix picture cuando no hay imagen
+                //Componente cuando no hay imagen
                 placeholder: const AssetImage('assets/loading.gif'),
                 image: NetworkImage(url!),
                 fit: BoxFit.cover,

@@ -34,10 +34,10 @@ class Product {
   String toRawJson() => json.encode(toJson());
 
   Product copy() => Product(
-        available: this.available,
-        name: this.name,
-        picture: this.picture,
-        price: this.price,
-        id: this.id,
+        available: available,
+        name: name,
+        picture: picture,
+        price: price,
+        id: id,
       );
 }

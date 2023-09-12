@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable, avoid_print
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -60,7 +62,9 @@ class ProductsService extends ChangeNotifier {
     final url = Uri.https(_baseUrl, 'Products/${product.id}.json');
     final resp = await http.put(url, body: product.toRawJson());
     final decodedData = resp.body;
-    //Actualización del listado de productos
+    /*
+    Actualización del listado de productos
+    */
     final index = products.indexWhere((element) => element.id == product.id);
     products[index] = product;
     return product.id!;

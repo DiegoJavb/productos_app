@@ -108,7 +108,7 @@ class _LoginForm extends StatelessWidget {
                     if (!loginForm.isValidForm()) return;
                     loginForm.isLoading = true;
                     await Future.delayed(const Duration(seconds: 2));
-                    //TODO: Validar si el loading es correcto
+                    // Validadando si el loading es correcto
                     loginForm.isLoading = false;
                     if (context.mounted) {
                       Navigator.pushReplacementNamed(context, 'home');

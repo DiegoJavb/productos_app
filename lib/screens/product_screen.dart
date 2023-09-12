@@ -25,7 +25,6 @@ class ProductScreen extends StatelessWidget {
 
 class _ProductScreenBody extends StatelessWidget {
   const _ProductScreenBody({
-    super.key,
     required this.productService,
   });
 
@@ -66,7 +65,7 @@ class _ProductScreenBody extends StatelessWidget {
                         size: 60,
                       ),
                       color: Colors.white,
-                      //TODO: camara o galleria
+                      //Uso de camara o galeria para el image picker
                       onPressed: () async {
                         final picker = ImagePicker();
                         final XFile? pickedFile = await picker.pickImage(
@@ -74,10 +73,10 @@ class _ProductScreenBody extends StatelessWidget {
                           imageQuality: 100,
                         );
                         if (pickedFile == null) {
-                          print('No selecciono nada');
+                          // print('No selecciono nada');
                           return;
                         }
-                        print('tenemos imagen ${pickedFile.path}');
+                        // print('tenemos imagen ${pickedFile.path}');
                         productService.updateSelectedProductImage(
                           pickedFile.path,
                         );
@@ -135,6 +134,7 @@ class _ProductForm extends StatelessWidget {
                   if (value == null || value.isEmpty) {
                     return 'El nombre es obligatorio';
                   }
+                  return '';
                 },
                 decoration: InputDecorations.authInputDecoration(
                   hintText: 'Nombre del Producto',
