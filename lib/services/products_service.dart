@@ -108,6 +108,5 @@ class ProductsService extends ChangeNotifier {
     newPictureFile = null;
     final decodedData = json.decode(resp.body);
     return decodedData['secure_url'];
-    print(resp.body);
   }
 }
