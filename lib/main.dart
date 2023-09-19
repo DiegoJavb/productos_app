@@ -11,11 +11,13 @@ class AppState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => ProductsService())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthService()),
+        ChangeNotifierProvider(create: (_) => ProductsService()),
+      ],
       child: const MyApp(),
     );
   }
-  
 }
 
 class MyApp extends StatelessWidget {
@@ -26,9 +28,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Products App',
-      initialRoute: 'home',
+      initialRoute: 'login',
       routes: {
         'login': (_) => const LoginScreen(),
+        'register': (_) => const RegisterScreen(),
         'home': (_) => const HomeScreen(),
         'product': (_) => const ProductScreen(),
       },
