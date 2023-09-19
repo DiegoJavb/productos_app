@@ -63,4 +63,11 @@ class AuthService extends ChangeNotifier {
     await storage.delete(key: 'token');
     return;
   }
+
+  //Metodo para verificar si tengo un token guardado
+  /*No lo hago como un string opcional y tampoco retorno null
+  porque esta funcion la terminare conectando a un stringBuilder*/
+  Future<String> readToken() async {
+    return await storage.read(key: 'token') ?? '';
+  }
 }
