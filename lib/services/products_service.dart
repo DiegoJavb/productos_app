@@ -5,13 +5,16 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 
-import 'package:productos_app/models/models.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+
+import 'package:productos_app/models/models.dart';
 
 class ProductsService extends ChangeNotifier {
   final String _baseUrl = 'flutter-varios-42f6f-default-rtdb.firebaseio.com';
   final List<Product> products = [];
   late Product selectedProduct;
+  final storage = FlutterSecureStorage();
 
   bool isLoading = true;
   bool isSaving = false;
@@ -25,7 +28,11 @@ class ProductsService extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
 
-    final url = Uri.https(_baseUrl, 'Products.json');
+    final url = Uri.https(
+      _baseUrl,
+      'Products.json',
+      {'auth': await storage.read(key: 'token' ?? '')},
+    );
     final resp = await http.get(url);
 
     final Map<String, dynamic> productsMap = json.decode(resp.body);
@@ -59,8 +66,15 @@ class ProductsService extends ChangeNotifier {
 
   // Actualizar un producto
   Future<String> updateProduct(Product product) async {
-    final url = Uri.https(_baseUrl, 'Products/${product.id}.json');
-    final resp = await http.put(url, body: product.toRawJson());
+    final url = Uri.https(
+      _baseUrl,
+      'Products/${product.id}.json',
+      {'auth': await storage.read(key: 'token' ?? '')},
+    );
+    final resp = await http.put(
+      url,
+      body: product.toRawJson(),
+    );
     final decodedData = resp.body;
     /*
     Actualización del listado de productos
@@ -72,7 +86,11 @@ class ProductsService extends ChangeNotifier {
 
   //Crear un producto
   Future<String> createProduct(Product product) async {
-    final url = Uri.https(_baseUrl, 'Products.json');
+    final url = Uri.https(
+      _baseUrl,
+      'Products.json',
+      {'auth': await storage.read(key: 'token' ?? '')},
+    );
     final resp = await http.post(url, body: product.toRawJson());
     final decodedData = json.decode(resp.body);
     product.id = decodedData['name'];
